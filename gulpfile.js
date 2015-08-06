@@ -2,7 +2,8 @@ var gulp = require('gulp'),
 browserSync = require('browser-sync');
 
 gulp.task('serve', function() {
-	return browserSync.init({
+	
+	browserSync.init({
 		notify: false,
 		port: 8080,
 		server: {
@@ -21,3 +22,23 @@ gulp.task('serve', function() {
 });
 
 gulp.task('default', ['serve']);
+
+gulp.task('test', function() {
+
+ 	browserSync.init({
+		notify: false,
+		port: 8081,
+		server: {
+			baseDir: ['test','app'],
+			routes: {
+				'/bower_components': 'bower_components',
+				'/node_modules': 'node_modules'
+			}
+		}
+		
+	})
+
+	gulp.watch(['test/**/*.*', 'app/**/*.*'])
+		.on('change', browserSync.reload)
+	
+});
