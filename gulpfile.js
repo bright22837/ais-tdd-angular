@@ -1,5 +1,6 @@
 var gulp = require('gulp'),
-browserSync = require('browser-sync');
+browserSync = require('browser-sync'),
+server = require('gulp-live-server');
 
 gulp.task('serve', function() {
 	
@@ -21,9 +22,7 @@ gulp.task('serve', function() {
 
 });
 
-gulp.task('default', ['serve']);
-
-gulp.task('test', function() {
+gulp.task('test', ['api-server'], function() {
 
  	browserSync.init({
 		notify: false,
@@ -42,3 +41,10 @@ gulp.task('test', function() {
 		.on('change', browserSync.reload)
 	
 });
+
+gulp.task('api-server', function() {
+	var live = new server('server.js');
+	live.start();
+});
+
+gulp.task('default', ['serve']);
